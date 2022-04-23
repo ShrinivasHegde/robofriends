@@ -1,4 +1,4 @@
-# This ROboFriends App created as part of React Learning.
+# This RoboFriends App created as part of React Learning.
 
 This project covers React Level 1 topics.
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState,useEffect } from "react";
 import CardList from "../components/cardList";
 //import { robots } from "../robots";
 import SearchBox from '../components/SearchBox'
@@ -7,31 +7,29 @@ import ErrorBoundery from "../components/ErrorBounderies";
 import './app.css'
 
 
-class App extends Component {
-    constructor (){
-        super()
-        this.state={
-            robots : [],
-            searchfield : ''
-
-        }
-        
-    }
+function App (){
+    const [robots,setRobots] = useState([])
+    const [searchfield,setSearchfield] = useState('')
     
-    componentDidMount(){
+    
+    useEffect(()=>{
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response=> response.json())
-            .then(users=> this.setState({ robots : users }))
-    }
+            .then(users=> setRobots(users))
+    },[])
+    // componentDidMount(){
+    //     fetch('https://jsonplaceholder.typicode.com/users')
+    //         .then(response=> response.json())
+    //         .then(users=> this.setState({ robots : users }))
+    // }
     
-    onSearchChange =(event)=>{
+    const onSearchChange =(event)=>{
         //console.log(event.target.value)
-        this.setState ({searchfield: event.target.value})
+        setSearchfield (event.target.value)
         //console.log(this.state.searchfield)
         
     }
-    render(){
-        const {robots, searchfield} = this.state
+    
         const filterRobots = robots.filter(robot =>{
             
             //console.log(this.state.searchfield); //Do you get your expected value here?
@@ -48,7 +46,7 @@ class App extends Component {
                 //console.log(filetrRobots)
                 <div className="tc">
                     <h1 className="f1">RoboFriends</h1>
-                    <SearchBox searchChange = {this.onSearchChange}/><br/>
+                    <SearchBox searchChange = {onSearchChange}/><br/>
                     <Scroll>
                         <ErrorBoundery>
                             <CardList robots = {filterRobots}/>
@@ -59,7 +57,7 @@ class App extends Component {
         }
         
        
-    }
+    
     
     
 }
